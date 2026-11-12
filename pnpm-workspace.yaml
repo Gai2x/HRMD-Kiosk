@@ -1,0 +1,17 @@
+# This workspace lives on an exFAT volume, which supports neither symlinks nor
+# junctions. pnpm's default isolated linker therefore fails with
+# "Incorrect function (os error 1)" when creating node_modules links. The
+# hoisted linker materializes real directories and works on every filesystem.
+nodeLinker: hoisted
+
+# Keep host-native binaries for builds and Linux ARM64 binaries for Lambda.
+supportedArchitectures:
+  os:
+    - current
+    - linux
+  cpu:
+    - current
+    - arm64
+  libc:
+    - current
+    - glibc

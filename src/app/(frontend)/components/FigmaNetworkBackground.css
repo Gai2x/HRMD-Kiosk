@@ -1,0 +1,94 @@
+/* z-index must stay >= 0: a negative index paints behind the parent element's
+   own background colour, which made the pastel gradient invisible. */
+.network-background {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 58% 74% at 5% 93%,
+      rgba(214, 160, 255, 0.82) 0%,
+      rgba(205, 175, 250, 0.43) 38%,
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 42% 54% at 91% 7%,
+      rgba(86, 224, 246, 0.7) 0%,
+      rgba(119, 215, 244, 0.4) 43%,
+      transparent 78%
+    ),
+    radial-gradient(ellipse 43% 54% at 77% 82%, rgba(156, 190, 243, 0.58) 0%, transparent 74%),
+    linear-gradient(124deg, #b8c9f1 0%, #c2caf2 27%, #acd7f2 61%, #91dff3 100%);
+}
+
+.pastel-wash {
+  position: absolute;
+  inset: -8%;
+  opacity: 0.62;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2) 0 2%, transparent 18%),
+    radial-gradient(circle at 67% 42%, rgba(255, 255, 255, 0.14) 0 3%, transparent 21%),
+    radial-gradient(circle at 50% 100%, rgba(214, 172, 255, 0.38), transparent 35%);
+  filter: blur(24px);
+  animation: wash-drift 11.33s ease-in-out infinite alternate;
+}
+
+.network-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.primary-lines line {
+  stroke: url(#line-fade);
+  stroke-width: 1.35;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.primary-nodes circle {
+  fill: rgba(255, 255, 255, 0.94);
+}
+
+.distant-network {
+  opacity: 0.26;
+  animation: distant-drift 9s ease-in-out infinite alternate;
+}
+
+.distant-network line {
+  stroke: rgba(255, 255, 255, 0.76);
+  stroke-width: 2.1;
+  vector-effect: non-scaling-stroke;
+}
+
+.distant-network circle {
+  fill: rgba(255, 255, 255, 0.88);
+}
+
+@keyframes wash-drift {
+  from {
+    transform: translate3d(-0.8%, -0.5%, 0) scale(1.01);
+  }
+  to {
+    transform: translate3d(0.8%, 0.6%, 0) scale(1.025);
+  }
+}
+
+@keyframes distant-drift {
+  from {
+    transform: translate(-4px, 3px);
+  }
+  to {
+    transform: translate(5px, -4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pastel-wash,
+  .distant-network {
+    animation: none;
+  }
+}
